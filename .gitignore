@@ -1,0 +1,17 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+*.tfvars
+!*.tfvars.example
+# .terraform.lock.hcl is intentionally NOT ignored: it must be committed.
+
+# Environment
+.env
+
+# Python
+__pycache__/
+*.pyc
+
+# Editor
+.vscode/
