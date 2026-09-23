@@ -1,5 +1,6 @@
 resource "aws_s3_bucket" "cv_storage" {
   bucket = var.bucket_name
+  force_destroy = true // security issue : used only for demo
 }
 
 resource "aws_s3_bucket_public_access_block" "cv_storage" {
