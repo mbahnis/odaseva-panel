@@ -5,3 +5,9 @@ module "kms" {
   project_name = var.project_name
   environment  = var.environment
 }
+
+module "dynamodb" {
+  source      = "./modules/dynamodb"
+  table_name  = "${var.project_name}-candidates"
+  kms_key_arn = module.kms.key_arn
+}
