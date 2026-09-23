@@ -11,3 +11,9 @@ module "dynamodb" {
   table_name  = "${var.project_name}-candidates"
   kms_key_arn = module.kms.key_arn
 }
+
+module "s3" {
+  source      = "./modules/s3"
+  bucket_name = "${var.project_name}-cv"
+  kms_key_arn = module.kms.key_arn
+}
