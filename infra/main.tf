@@ -17,3 +17,12 @@ module "s3" {
   bucket_name = "${var.project_name}-cv"
   kms_key_arn = module.kms.key_arn
 }
+
+module "iam" {
+  source             = "./modules/iam"
+  project_name       = var.project_name
+  dynamodb_table_arn = module.dynamodb.table_arn
+  dynamodb_gsi_name  = module.dynamodb.gsi_name
+  s3_bucket_arn      = module.s3.bucket_arn
+  kms_key_arn        = module.kms.key_arn
+}
