@@ -48,3 +48,14 @@ module "lambda_get_candidate" {
     S3_BUCKET_NAME      = module.s3.bucket_name
   }
 }
+
+module "lambda_list_candidates" {
+  source        = "./modules/lambda"
+  function_name = "${var.project_name}-list-candidates"
+  source_dir    = "${path.module}/../src/list_candidates"
+  role_arn      = module.iam.list_candidates_role_arn
+  environment_variables = {
+    DYNAMODB_TABLE_NAME = module.dynamodb.table_name
+    GSI_NAME            = module.dynamodb.gsi_name
+  }
+}
