@@ -15,3 +15,8 @@ output "cognito_app_client_secret" {
   value       = module.cognito.app_client_secret
   sensitive   = true
 }
+
+output "api_endpoint" {
+  description = "Base URL of the HTTP API."
+  value       = module.api_gateway.api_endpoint
+}

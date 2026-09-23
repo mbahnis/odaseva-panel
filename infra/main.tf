@@ -65,3 +65,19 @@ module "cognito" {
   project_name = var.project_name
   environment  = var.environment
 }
+
+module "api_gateway" {
+  source       = "./modules/api_gateway"
+  project_name = var.project_name
+  aws_region   = var.aws_region
+
+  cognito_user_pool_id  = module.cognito.user_pool_id
+  cognito_app_client_id = module.cognito.app_client_id
+
+  create_candidate_invoke_arn    = module.lambda_create_candidate.lambda_invoke_arn
+  create_candidate_function_name = module.lambda_create_candidate.lambda_function_name
+  get_candidate_invoke_arn       = module.lambda_get_candidate.lambda_invoke_arn
+  get_candidate_function_name    = module.lambda_get_candidate.lambda_function_name
+  list_candidates_invoke_arn     = module.lambda_list_candidates.lambda_invoke_arn
+  list_candidates_function_name  = module.lambda_list_candidates.lambda_function_name
+}
