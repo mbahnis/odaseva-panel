@@ -59,3 +59,9 @@ module "lambda_list_candidates" {
     GSI_NAME            = module.dynamodb.gsi_name
   }
 }
+
+module "cognito" {
+  source       = "./modules/cognito"
+  project_name = var.project_name
+  environment  = var.environment
+}
