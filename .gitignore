@@ -4,6 +4,7 @@
 *.tfstate*
 *.tfvars
 !*.tfvars.example
+infra/.build/
 # .terraform.lock.hcl is intentionally NOT ignored: it must be committed.
 
 # Environment
