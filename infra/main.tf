@@ -26,3 +26,14 @@ module "iam" {
   s3_bucket_arn      = module.s3.bucket_arn
   kms_key_arn        = module.kms.key_arn
 }
+
+module "lambda_create_candidate" {
+  source        = "./modules/lambda"
+  function_name = "${var.project_name}-create-candidate"
+  source_dir    = "${path.module}/../src/create_candidate"
+  role_arn      = module.iam.create_candidate_role_arn
+  environment_variables = {
+    DYNAMODB_TABLE_NAME = module.dynamodb.table_name
+    S3_BUCKET_NAME      = module.s3.bucket_name
+  }
+}
