@@ -1,5 +1,4 @@
-# Ce fichier accueillera les appels aux modules au fur et à mesure de leur création.
-
+# Module calls are added here as each component is built.
 module "kms" {
   source       = "./modules/kms"
   project_name = var.project_name

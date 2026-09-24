@@ -1,5 +1,4 @@
-# Ce fichier accueillera les outputs des modules au fur et à mesure de leur création.
-
+# Root-level outputs are added here as each module exposes them.
 output "cognito_user_pool_domain" {
   description = "Cognito hosted domain, used to build the OAuth2 token endpoint URL."
   value       = module.cognito.user_pool_domain
