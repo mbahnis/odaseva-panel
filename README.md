@@ -142,18 +142,13 @@ terraform destroy
 - The KMS key is not deleted immediately: AWS schedules it for deletion after a 7-day waiting period (`deletion_window_in_days = 7`), during which the deletion can still be cancelled.
 - `force_destroy = true` is enabled on the S3 bucket so that `terraform destroy` also deletes the stored CVs, allowing repeated destroy/apply cycles during the demo. This is not recommended in production, where a destroy could permanently delete candidate data.
 
-## Security highlights
+## Security and design decisions
 
-- All data encrypted at rest with a customer-managed KMS key (DynamoDB and S3), with automatic yearly key rotation
-- S3 public access fully blocked; CVs are only reachable through short-lived presigned URLs
-- Least-privilege IAM: one role per Lambda, scoped to the exact table, index or bucket, with `kms:ViaService` conditions restricting key usage to DynamoDB or S3
-- OAuth2 Client Credentials authentication, with per-route scopes (`read` / `write`) enforced by the API Gateway JWT authorizer
-- Lambda invoke permissions scoped to this specific API (`source_arn`), not to API Gateway as a whole
+See [docs/technical-specification.md](docs/technical-specification.md) for the
+full rationale behind the architecture and security choices (authentication,
+encryption, least-privilege IAM).
 
 ## Known limitations
 
-- **CV size is limited to 4.5 MB**: the file is sent base64-encoded in the request body, which is capped at 6 MB by Lambda.
-- **No WAF or CloudFront in this MVP**: no rate limiting beyond API Gateway defaults, no IP filtering and no edge caching.
-- **Candidate IDs are random** (`CA-XXXXXX`, 1 million possible values): collisions are detected and retried, but the ID space is only suitable for a demo.
-
-See [docs/technical-specification.md](docs/technical-specification.md) for the complete list of limitations and design decisions.
+See [docs/technical-specification.md](docs/technical-specification.md) for the
+complete list of limitations and possible improvements.
